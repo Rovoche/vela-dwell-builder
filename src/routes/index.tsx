@@ -839,14 +839,14 @@ function RovocheSidePill() {
   if (!visible) return null;
 
   return (
-    <div className="fixed right-5 top-1/2 z-50 -translate-y-1/2">
+    <div className="fixed bottom-5 left-5 z-50">
       <a
         href="https://rovoche.com"
         target="_blank"
         rel="noopener noreferrer"
-        className="group inline-flex items-center gap-2 rounded-full bg-[#F5F2EC] px-3 py-1.5 text-[0.65rem] font-medium tracking-[0.14em] text-[#1A1A1A] shadow-lg transition-all hover:shadow-xl"
+        className="group inline-flex items-center gap-2.5 rounded-full bg-[#F5F2EC] px-4 py-2.5 text-xs font-medium tracking-[0.14em] text-[#1A1A1A] shadow-lg transition-all hover:shadow-xl"
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57]" />
+        <span className="h-2 w-2 rounded-full bg-[#B08D57]" />
         Concept by ROVOCHÉ
         <span
           role="button"
@@ -856,9 +856,9 @@ function RovocheSidePill() {
             e.stopPropagation();
             setVisible(false);
           }}
-          className="ml-1 rounded-full p-0.5 text-[#1A1A1A]/50 hover:bg-[#1A1A1A]/10 hover:text-[#1A1A1A]"
+          className="ml-1 rounded-full p-1 text-[#1A1A1A]/50 hover:bg-[#1A1A1A]/10 hover:text-[#1A1A1A]"
         >
-          <X size={11} />
+          <X size={14} />
         </span>
       </a>
     </div>
