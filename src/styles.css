@@ -93,3 +93,14 @@
   opacity: 0;
   &.is-visible { animation: vela-fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
 }
+
+/* Force-hide the platform-injected Lovable/GPT Engineer badge on published deploys. */
+#lovable-badge,
+[id="lovable-badge"],
+a[href*="lovable.dev"],
+a[href*="gpteng.co"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
