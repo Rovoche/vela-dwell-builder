@@ -832,10 +832,42 @@ function Faq() {
   );
 }
 
+// ---------- Side pill (ROVOCHÉ) ----------
+
+function RovocheSidePill() {
+  const [visible, setVisible] = useState(true);
+  if (!visible) return null;
+
+  return (
+    <div className="fixed right-5 top-1/2 z-50 -translate-y-1/2">
+      <a
+        href="https://rovoche.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group inline-flex items-center gap-2 rounded-full bg-[#F5F2EC] px-3 py-1.5 text-[0.65rem] font-medium tracking-[0.14em] text-[#1A1A1A] shadow-lg transition-all hover:shadow-xl"
+      >
+        <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57]" />
+        Concept by ROVOCHÉ
+        <span
+          role="button"
+          aria-label="Dismiss"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setVisible(false);
+          }}
+          className="ml-1 rounded-full p-0.5 text-[#1A1A1A]/50 hover:bg-[#1A1A1A]/10 hover:text-[#1A1A1A]"
+        >
+          <X size={11} />
+        </span>
+      </a>
+    </div>
+  );
+}
+
 // ---------- Footer ----------
 
 function Footer() {
-  const [badgeOpen, setBadgeOpen] = useState(true);
   return (
     <footer className="bg-[#1A1A1A] text-[#F5F2EC]">
       <div className="container-vela grid gap-12 py-20 md:grid-cols-3">
@@ -869,34 +901,25 @@ function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[#F5F2EC]/10 py-8">
-        <div className="container-vela flex flex-col items-center gap-4">
+      <div className="border-t border-[#F5F2EC]/10 py-10">
+        <div className="container-vela flex flex-col items-center gap-6">
           <p className="text-[0.65rem] uppercase tracking-[0.24em] text-[#F5F2EC]/50">
             © {new Date().getFullYear()} Vela Residences. All rights reserved.
           </p>
-          {badgeOpen && (
+          <div className="flex flex-col items-center gap-3">
+            <span className="h-px w-10 bg-[#F5F2EC]/20" />
+            <p className="font-serif text-lg text-[#F5F2EC]">
+              Built on Rock. <span className="italic">Crafted to Last.</span>
+            </p>
             <a
               href="https://rovoche.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-[#F5F2EC] px-3 py-1.5 text-[0.65rem] font-medium tracking-[0.14em] text-[#1A1A1A] shadow-sm transition-all hover:shadow-md"
+              className="text-[0.65rem] font-medium uppercase tracking-[0.28em] text-[#F5F2EC]/60 transition-colors hover:text-[#B08D57]"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#B08D57]" />
-              Concept by ROVOCHÉ
-              <span
-                role="button"
-                aria-label="Dismiss"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setBadgeOpen(false);
-                }}
-                className="ml-1 rounded-full p-0.5 text-[#1A1A1A]/50 hover:bg-[#1A1A1A]/10 hover:text-[#1A1A1A]"
-              >
-                <X size={11} />
-              </span>
+              — ROVOCHÉ
             </a>
-          )}
+          </div>
         </div>
       </div>
     </footer>
@@ -919,6 +942,7 @@ function VelaSite() {
       <Booking />
       <Faq />
       <Footer />
+      <RovocheSidePill />
     </main>
   );
 }
