@@ -1,106 +1,218 @@
-@import "tailwindcss" source(none);
-@source "../src";
-@import "tw-animate-css";
+@import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-gold: var(--gold);
-  --color-gold-foreground: var(--gold-foreground);
-  --color-ink: var(--ink);
-  --color-cream: var(--cream);
-  --font-serif: "Fraunces", ui-serif, Georgia, serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --color-bg: #FAF5EC;
+  --color-panel: #F3ECDF;
+  --color-beige: #E4D8C3;
+  --color-text: #2B2521;
+  --color-muted: #6E6357;
+  --color-accent: #C9A876;
 }
 
-:root {
-  --radius: 0.5rem;
-  --ink: oklch(0.20 0.005 60);
-  --cream: oklch(0.955 0.012 85);
-  --gold: oklch(0.66 0.09 70);
-  --gold-foreground: oklch(0.98 0.005 85);
-
-  --background: var(--cream);
-  --foreground: var(--ink);
-  --card: oklch(1 0 0);
-  --card-foreground: var(--ink);
-  --popover: oklch(1 0 0);
-  --popover-foreground: var(--ink);
-  --primary: var(--gold);
-  --primary-foreground: var(--gold-foreground);
-  --secondary: oklch(0.92 0.01 85);
-  --secondary-foreground: var(--ink);
-  --muted: oklch(0.93 0.008 85);
-  --muted-foreground: oklch(0.45 0.01 60);
-  --accent: var(--gold);
-  --accent-foreground: var(--gold-foreground);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.98 0.003 247);
-  --border: oklch(0.88 0.01 80);
-  --input: oklch(0.88 0.01 80);
-  --ring: var(--gold);
+body {
+  background-color: #FAF5EC;
+  color: #2B2521;
+  font-family: "Jost", "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-@layer base {
-  * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
-    -webkit-font-smoothing: antialiased;
+/* Custom scrollbar matching aesthetics */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF5EC;
+}
+::-webkit-scrollbar-thumb {
+  background: #C9A876;
+  border-radius: 3px;
+}
+
+/* Infinite Scrolling Marquee Logic */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
-  h1, h2, h3, h4 { font-family: var(--font-serif); letter-spacing: -0.01em; }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
-@utility container-vela {
-  width: 100%;
-  margin-inline: auto;
-  padding-inline: 1.25rem;
-  max-width: 80rem;
-}
-
-@keyframes vela-fade-up {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@utility reveal {
+.reveal-el {
   opacity: 0;
-  &.is-visible { animation: vela-fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+}
+.reveal-el.is-visible {
+  animation: revealUp 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 
-/* Force-hide the platform-injected Lovable/GPT Engineer badge on published deploys. */
-#lovable-badge,
-[id="lovable-badge"],
-a[href*="lovable.dev"],
-a[href*="gpteng.co"] {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes carveReveal {
+  0% {
+    letter-spacing: -0.05em;
+    filter: blur(12px);
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  25% {
+    filter: blur(6px);
+    opacity: 0.55;
+    transform: scale(0.98);
+  }
+  65% {
+    letter-spacing: 0.22em;
+    filter: blur(0px);
+    opacity: 1;
+    transform: scale(1);
+    text-shadow: 0 0 35px rgba(201, 168, 118, 0.45);
+  }
+  100% {
+    letter-spacing: 0.22em;
+    opacity: 1;
+    transform: scale(1);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9), 0 0 15px rgba(201, 168, 118, 0.25);
+  }
+}
+
+@keyframes fadeInIntro {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+}
+
+.intro-carve-reveal {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  background: linear-gradient(135deg, #FAF5EC 0%, #C9A876 50%, #8A6F44 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  animation: carveReveal 3.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.intro-paths-group path {
+  stroke-dasharray: 700;
+  stroke-dashoffset: 700;
+}
+
+.mask-linear {
+  mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+}
+
+/* Portfolio card: scroll-through-screenshot animation.
+   Travels down the full page screenshot, pauses, travels back up, loops.
+   Paused by default — triggered by .is-scrolling on the frame. */
+@keyframes scrollThroughShot {
+  0%, 6% { transform: translateY(0); }
+  46%, 54% { transform: translateY(-84%); }
+  94%, 100% { transform: translateY(0); }
+}
+.scroll-shot {
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: scrollThroughShot 21s ease-in-out infinite;
+  animation-play-state: paused;
+}
+.is-scrolling .scroll-shot {
+  animation-play-state: running;
+}
+.group:hover .scroll-shot {
+  animation-play-state: running;
+}
+/* Always-running variant for the full case-study preview banner */
+.scroll-shot-auto {
+  width: 100%;
+  height: auto;
+  display: block;
+  animation: scrollThroughShot 26s ease-in-out infinite;
+}
+
+/* Portfolio card: a thin gold outline that continuously sweeps
+   around the OUTSIDE of the whole card. Present but understated at
+   rest on every card; brightens and quickens on the focused one so
+   attention has somewhere clear to land. */
+/* Portfolio card: gold corner brackets draw in on focus (hover on
+   desktop, touch on mobile) — like a viewfinder locking on, rather
+   than a decorative glow. Invisible at rest. Uses real elements
+   (not ::before/::after) since we need all four corners. */
+.corner-frame {
+  position: relative;
+}
+.corner-bracket {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: #c9a876;
+  border-style: solid;
+  border-width: 0;
+  opacity: 0;
+  transition: opacity 0.25s ease, width 0.25s ease, height 0.25s ease;
+  pointer-events: none;
+  z-index: 6;
+}
+.corner-bracket.tl {
+  top: -2px;
+  left: -2px;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+.corner-bracket.tr {
+  top: -2px;
+  right: -2px;
+  border-top-width: 2px;
+  border-right-width: 2px;
+}
+.corner-bracket.bl {
+  bottom: -2px;
+  left: -2px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+}
+.corner-bracket.br {
+  bottom: -2px;
+  right: -2px;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+}
+.corner-frame.is-active .corner-bracket,
+.group:hover .corner-bracket {
+  opacity: 1;
+  width: 26px;
+  height: 26px;
+}
+.corner-frame-inner {
+  background: #0c0a09;
+  border-radius: 0.125rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  height: 100%;
+}
+
+/* Hide scrollbar on the work carousel while keeping native scroll/snap */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
